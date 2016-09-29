@@ -34,7 +34,7 @@ This is a roll-your-own-server solution running Node and Express. It parses Goog
 
 1. Deploy application on a server somewhere. ([DigitalOcean](https://www.digitalocean.com) with [Dokku](http://dokku.viewdocs.io/dokku/) is great.)
 2. Create a Google Spreadsheet where columns are fields, rows are records, and the first row is a header that contains the field names. These will become the keys (properties) of the objects in the JSON output.
-3. From the editing page of your Google Spreadsheet, go to File > Publish to the web..., choose the sheet you want to publish from the dropdown menu, and click the "Publish" button.
+3. From the editing page of your Google Spreadsheet, go to File > Publish to the web..., choose the sheet you want to publish from the dropdown menu, select "Comma-separated values (.csv)" for the format, and click the "Publish" button.
 4. Copy *only the spreadsheet id* from the input box that appears; e.g. https://docs.google.com/spreadsheets/d/**1R8ZCNiUyZSC1CqpjMn-nBlRjwMJu3T3iZz7TkDbEx3k**/pubhtml
 5. Make a request to http(s)://[your-server.com]/api/v1/sheet/[**spreadsheet-id**]
 
