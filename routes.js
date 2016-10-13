@@ -1,17 +1,25 @@
 const express = require('express');
 const router = express.Router();
-const cache = require('apicache').middleware;
+const apicache = require('apicache');
 const request = require('superagent');
 const Baby = require('babyparse');
 
+const cache = apicache.options({ 
+  // one day (ms in s * s in min * mins in hr * hrs in day)
+  defaultDuration: 1000 * 60 * 60 * 24 
+}).middleware;
 
-router.get('/sheet/:id', cache('1 minute'), function(req, expressRes, next) {
+
+router.get('/sheet/:id', cache(), (req, expressRes, next) => {
 
   if (!req.params.id) {
     return expressRes
     .status(400)
-    .send({ error: 'Request missing sheet ID.' });
+    .send({ error: 'Missing sheet ID.' });
   }
+
+  // use the sheet id for cache key
+  req.apicacheGroup = req.params.id;
 
   const url = `https://docs.google.com/spreadsheets/d/${req.params.id}/pub?output=csv`;
 
@@ -37,6 +45,16 @@ router.get('/sheet/:id', cache('1 minute'), function(req, expressRes, next) {
     expressRes.json(results.data);
   });
 
+});
+
+router.post('/purge/:id', (req, res, next) => {
+  apicache.clear(req.params.id);
+  res.status(204).send(); 
+});
+
+router.get('/cache-example', cache('100 days'), (req, res, next) => {
+  console.log('cache miss');
+  res.json({ example: 'response' });
 });
 
 module.exports = router;
