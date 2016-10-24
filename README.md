@@ -1,5 +1,7 @@
 # Yet Another Google Spreadsheet API (yagsa)
 
+**For a possibly better option that doesn't require running a web application on your own server, check out: [liddiard/google-sheet-s3](https://github.com/liddiard/google-sheet-s3).**
+
 ## Does
 
 - Return a published Google Sheet as JSON given a sheet ID.
